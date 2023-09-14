@@ -1,0 +1,118 @@
+{
+  "name": "kafka_node_underutilization_check",
+  "description": "This incident type typically refers to situations where a software engineer wants to check if a Kafka node is being used efficiently. Kafka is a distributed messaging system that is widely used for real-time data processing, streaming, and storage. In some cases, a Kafka node may be underutilized, which means it is not processing data as efficiently as it could be. In order to optimize performance, it is important to regularly check if Kafka nodes are being used to their full potential.",
+  "params": [
+    {
+      "name": "KAFKA_MOUNT_POINT",
+      "value": ""
+    },
+    {
+      "name": "ZOOKEEPER_LOG_FILE",
+      "value": ""
+    },
+    {
+      "name": "KAFKA_LOG_FILE",
+      "value": ""
+    },
+    {
+      "name": "KAFKA_PORT",
+      "value": ""
+    },
+    {
+      "name": "NETWORK_INTERFACE",
+      "value": ""
+    },
+    {
+      "name": "HOST_NAME",
+      "value": ""
+    },
+    {
+      "name": "K8S_CLUSTER_NAME",
+      "value": ""
+    },
+    {
+      "name": "NAMESPACE",
+      "value": ""
+    }
+  ],
+  "cells": [
+    {
+      "name": "cell_1",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Kafka node underutilization check.\nThis incident type typically refers to situations where a software engineer wants to check if a Kafka node is being used efficiently. Kafka is a distributed messaging system that is widely used for real-time data processing, streaming, and storage. In some cases, a Kafka node may be underutilized, which means it is not processing data as efficiently as it could be. In order to optimize performance, it is important to regularly check if Kafka nodes are being used to their full potential."
+    },
+    {
+      "name": "cell_2",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the CPU usage of the Kafka node"
+    },
+    {
+      "name": "cell_3",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `top -b -n 1 | grep kafka`"
+    },
+    {
+      "name": "cell_4",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the network traffic on the Kafka node"
+    },
+    {
+      "name": "cell_5",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `sudo tcpdump -i ${NETWORK_INTERFACE} port ${KAFKA_PORT}`"
+    },
+    {
+      "name": "cell_6",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the number of active Kafka connections"
+    },
+    {
+      "name": "cell_7",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `sudo ss -antp | grep ${KAFKA_PORT} | wc -l`"
+    },
+    {
+      "name": "cell_8",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the disk usage of the Kafka node"
+    },
+    {
+      "name": "cell_9",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `df -h | grep ${KAFKA_MOUNT_POINT}`"
+    },
+    {
+      "name": "cell_10",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the Kafka logs for any errors or warnings"
+    },
+    {
+      "name": "cell_11",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `tail -f ${KAFKA_LOG_FILE}`"
+    },
+    {
+      "name": "cell_12",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the ZooKeeper logs for any errors or warnings"
+    },
+    {
+      "name": "cell_13",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `tail -f ${ZOOKEEPER_LOG_FILE}`"
+    }
+  ]
+}
