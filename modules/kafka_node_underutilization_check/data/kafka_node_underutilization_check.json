@@ -3,15 +3,7 @@
   "description": "This incident type typically refers to situations where a software engineer wants to check if a Kafka node is being used efficiently. Kafka is a distributed messaging system that is widely used for real-time data processing, streaming, and storage. In some cases, a Kafka node may be underutilized, which means it is not processing data as efficiently as it could be. In order to optimize performance, it is important to regularly check if Kafka nodes are being used to their full potential.",
   "params": [
     {
-      "name": "KAFKA_MOUNT_POINT",
-      "value": ""
-    },
-    {
       "name": "ZOOKEEPER_LOG_FILE",
-      "value": ""
-    },
-    {
-      "name": "KAFKA_LOG_FILE",
       "value": ""
     },
     {
@@ -19,7 +11,15 @@
       "value": ""
     },
     {
+      "name": "KAFKA_MOUNT_POINT",
+      "value": ""
+    },
+    {
       "name": "NETWORK_INTERFACE",
+      "value": ""
+    },
+    {
+      "name": "KAFKA_LOG_FILE",
       "value": ""
     },
     {
