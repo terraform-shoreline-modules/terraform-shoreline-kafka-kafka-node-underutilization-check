@@ -14,8 +14,8 @@ provider "shoreline" {
   debug = true
 }
 
-module "kafka_node_underutilization_check" {
-  source    = "./modules/kafka_node_underutilization_check"
+module "kafka_node_underutilization_check_incident" {
+  source    = "./modules/kafka_node_underutilization_check_incident"
 
   providers = {
     shoreline = shoreline
